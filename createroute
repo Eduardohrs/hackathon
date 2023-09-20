@@ -137,3 +137,80 @@ Future<List<String>> rotasamigas(
   List<String> a = [nomefinal, origemamigofinal, destinoamigofinal];
   return a;
 }
+Future<String> criarrota(
+  String origem,
+  String destino,
+) async {
+  List<String> rota = [origem];
+  List<String> origemParts = origem.split(".");
+  List<String> destinoParts = destino.split(".");
+
+  int origem0 = int.parse(origemParts[0]);
+  int origem1 = int.parse(origemParts[1]);
+  int destino0 = int.parse(destinoParts[0]);
+  int destino1 = int.parse(destinoParts[1]);
+
+  while (origem0 != destino0) {
+    if (origem0 > destino0) {
+      origem0 = origem0 - 1;
+    } else if (origem0 < destino0) {
+      origem0 = origem0 + 1;
+    }
+    String ponto = '$origem0.$origem1';
+    rota.add(ponto);
+  }
+
+  while (origem1 != destino1) {
+    if (origem1 > destino1) {
+      origem1 = origem1 - 1;
+    } else if (origem1 < destino1) {
+      origem1 = origem1 + 1;
+    }
+    String ponto = '$origem0.$origem1';
+    rota.add(ponto);
+  }
+
+  String rotaStr = rota.join(",");
+  return rotaStr;
+}
+
+
+
+
+
+Future<String> criarrota(
+  String origem,
+  String destino,
+) async {
+  List<String> rota = [origem];
+  List<String> origemParts = origem.split(".");
+  List<String> destinoParts = destino.split(".");
+
+  int origem0 = int.parse(origemParts[0]);
+  int origem1 = int.parse(origemParts[1]);
+  int destino0 = int.parse(destinoParts[0]);
+  int destino1 = int.parse(destinoParts[1]);
+
+  while (origem0 != destino0) {
+    if (origem0 > destino0) {
+      origem0 = origem0 - 1;
+    } else if (origem0 < destino0) {
+      origem0 = origem0 + 1;
+    }
+    String ponto = '$origem0.$origem1';
+    rota.add(ponto);
+  }
+
+  while (origem1 != destino1) {
+    if (origem1 > destino1) {
+      origem1 = origem1 - 1;
+    } else if (origem1 < destino1) {
+      origem1 = origem1 + 1;
+    }
+    String ponto = '$origem0.$origem1';
+    rota.add(ponto);
+  }
+
+  String rotaStr = rota.join(",");
+  return rotaStr;
+}
