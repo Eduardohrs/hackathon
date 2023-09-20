@@ -1,0 +1,76 @@
+import 'dart:convert';
+import 'dart:math' as math;
+
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:timeago/timeago.dart' as timeago;
+import 'lat_lng.dart';
+import 'place.dart';
+import 'uploaded_file.dart';
+
+String economia(
+  String rota,
+  String rota4,
+) {
+  if (rota4 ==
+      "Unable to identify a mutually beneficial cost-effective route.") {
+    return rota4;
+  }
+  List<String> rotalist = rota.split(",");
+  List<String> rota4list = rota4.split(",");
+  double gastojunto = (rota4list.length - 1) / 2;
+  int gastosolo = rotalist.length - 1;
+  int eco = 100 - (((gastojunto / gastosolo) * 100).round());
+
+  return "Using UberShare you save " + eco.toString() + "% on every trip";
+}
+
+String tempo(
+  String rota,
+  String rota4,
+  bool fulltext,
+) {
+  if (rota4 ==
+      "Unable to identify a mutually beneficial cost-effective route.") {
+    return rota4;
+  }
+  List<String> rotalist = rota.split(",");
+  List<String> rota4list = rota4.split(",");
+  int temposolo = rotalist.length - 1;
+
+  String origem = rotalist[0];
+  String destino = rotalist[rotalist.length - 1];
+
+  int iorigem = rota4list.indexOf(origem);
+  int idestino = rota4list.indexOf(destino);
+
+  int tempojunto = idestino - iorigem;
+
+  int aumentotempo = (tempojunto - temposolo) * 10;
+  if (fulltext) {
+    return "It will take " +
+        aumentotempo.toString() +
+        " more minutes to get to your destination";
+  } else {
+    return aumentotempo.toString();
+  }
+}
+
+String? economiamensal(
+  String rota,
+  String rota4,
+) {
+  if (rota4 ==
+      "Unable to identify a mutually beneficial cost-effective route.") {
+    return rota4;
+  }
+  List<String> rotalist = rota.split(",");
+  List<String> rota4list = rota4.split(",");
+  double gastojunto = (rota4list.length - 1) / 2;
+  int gastosolo = rotalist.length - 1;
+  double ecomensal = (gastosolo - gastojunto) * 5 * 30;
+  return "After 30 days using Uber Share, you will have saved " +
+      ecomensal.toString() +
+      " dollars";
+}
