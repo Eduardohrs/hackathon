@@ -214,3 +214,25 @@ Future<String> criarrota(
   String rotaStr = rota.join(",");
   return rotaStr;
 }
+
+
+
+Future<String> traduzir(String local) async {
+  String traduzido = "";
+
+  if (local[0] == "A" || local[0] == "a") {
+    traduzido = "1." + local[1];
+  } else if (local[0] == "B" || local[0] == "b") {
+    traduzido = "2." + local[1];
+  } else if (local[0] == "C" || local[0] == "c") {
+    traduzido = "3." + local[1];
+  } else if (local[0] == "D" || local[0] == "d") {
+    traduzido = "4." + local[1];
+  } else if (local[0] == "E" || local[0] == "e") {
+    traduzido = "5." + local[1];
+  } else if (local[0] == "F" || local[0] == "f") {
+    traduzido = "6." + local[1];
+  }
+
+  return traduzido;
+}
