@@ -1,0 +1,139 @@
+Future<List<String>> rotasamigas(
+  String origemsolo,
+  String destinosolo,
+  String myname,
+  List<String> database,
+) async {
+  double economia(String rota, String rota4) {
+    List<String> rotal = rota.split(",");
+    List<String> rota4l = rota4.split(",");
+    double gastojunto = (rota4l.length - 1) / 2;
+    double gastosolo = rotal.length - 1;
+    double eco = gastosolo - gastojunto;
+    return eco;
+  }
+
+  String criarrota(String origem, String destino) {
+    List<String> rota = [origem];
+    List<String> origemParts = origem.split(".");
+    List<String> destinoParts = destino.split(".");
+
+    int origem0 = int.parse(origemParts[0]);
+    int origem1 = int.parse(origemParts[1]);
+    int destino0 = int.parse(destinoParts[0]);
+    int destino1 = int.parse(destinoParts[1]);
+
+    while (origem0 != destino0) {
+      if (origem0 > destino0) {
+        origem0 = origem0 - 1;
+      } else if (origem0 < destino0) {
+        origem0 = origem0 + 1;
+      }
+      String ponto = '$origem0.$origem1';
+      rota.add(ponto);
+    }
+
+    while (origem1 != destino1) {
+      if (origem1 > destino1) {
+        origem1 = origem1 - 1;
+      } else if (origem1 < destino1) {
+        origem1 = origem1 + 1;
+      }
+      String ponto = '$origem0.$origem1';
+      rota.add(ponto);
+    }
+
+    String rotaStr = rota.join(",");
+    return rotaStr;
+  }
+
+  String rota4locais(origem1, origem2, destino1, destino2) {
+    int distancia(String local1, String local2) {
+      List<String> local1Parts = local1.split(".");
+      List<String> local2Parts = local2.split(".");
+
+      int dist = (int.parse(local1Parts[0]) - int.parse(local2Parts[0])).abs() +
+          (int.parse(local1Parts[1]) - int.parse(local2Parts[1])).abs();
+
+      return dist;
+    }
+
+    int i = 0;
+    double dp = double.infinity;
+    int id = 0;
+    int dt = 0;
+
+    while (i < 4) {
+      if (i == 0) {
+        dt = distancia(origem1, destino1);
+      } else if (i == 1) {
+        dt = distancia(origem1, destino2);
+      } else if (i == 2) {
+        dt = distancia(origem2, destino1);
+      } else if (i == 3) {
+        dt = distancia(origem2, destino2);
+      }
+      if (dt < dp) {
+        dp = dt.toDouble();
+        id = i;
+      }
+      i = i + 1;
+    }
+
+    List<String> rota = [];
+    if (id == 0) {
+      rota = criarrota(origem2, origem1).split(",");
+      rota.removeLast();
+      rota.addAll(criarrota(origem1, destino1).split(","));
+      rota.removeLast();
+      rota.addAll(criarrota(destino1, destino2).split(","));
+    } else if (id == 1) {
+      rota = criarrota(origem2, origem1).split(",");
+      rota.removeLast();
+      rota.addAll(criarrota(origem1, destino2).split(","));
+      rota.removeLast();
+      rota.addAll(criarrota(destino2, destino1).split(","));
+    } else if (id == 2) {
+      rota = criarrota(origem1, origem2).split(",");
+      rota.removeLast();
+      rota.addAll(criarrota(origem2, destino1).split(","));
+      rota.removeLast();
+      rota.addAll(criarrota(destino1, destino2).split(","));
+    } else if (id == 3) {
+      rota = criarrota(origem1, origem2).split(",");
+      rota.removeLast();
+      rota.addAll(criarrota(origem2, destino2).split(","));
+      rota.removeLast();
+      rota.addAll(criarrota(destino2, destino1).split(","));
+    }
+
+    return rota.join(",");
+  }
+
+  double myeco = 0;
+  String nomefinal = "";
+  String origemamigofinal = "";
+  String destinoamigofinal = "";
+  String r = criarrota(origemsolo, destinosolo);
+  for (String origemedestino in database) {
+    List<String> od = origemedestino.split(",");
+    String nome = od.removeAt(0);
+    if (nome == myname) {
+      continue;
+    }
+    String r4 = rota4locais(origemsolo, od[0], destinosolo, od[1]);
+    double mytempeco = economia(r, r4);
+    double yourtempeco = economia(criarrota(od[0], od[1]), r4);
+    if (mytempeco > myeco && yourtempeco >= 0) {
+      origemamigofinal = od[0];
+      destinoamigofinal = od[1];
+      myeco = mytempeco;
+      nomefinal = nome;
+    }
+  }
+  if (myeco == 0) {
+    return ["0", "0", "0"];
+  }
+  List<String> a = [nomefinal, origemamigofinal, destinoamigofinal];
+  return a;
+}
