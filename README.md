@@ -12,3 +12,12 @@ Please run the app on an Android phone or emulator using the provided APK if you
       
    2. createroute: This page allows you to add your route to the database of the app by inserting your name, origin and destination. It also sorts through the              database in order to find which one of the other routes added to it is the best for you to share a ride with. This is determined by the function rotasamigas.         while the function criarrota traces the route between your origin and destination. the function traduzir takes your origin and destination and changes their 
       format in order to process them
+
+The remaining pages dont include complex functions and work for user navigation and interaction so we will give a brief summary of them here, we kindly ask that you check the APK for a complete visualization of the app:
+
+solicitation: this page provides the user with a view of who they are going to share a ride with, the origin and destinations for both of them, the rating of the ride partner on the app and the complete route they are going to take
+
+map: this page provides a view of the map we made of uberland which is the reference for origins and destinations
+
+menu: the main menu of the app, provides access to the other pages
+
